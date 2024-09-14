@@ -86,6 +86,7 @@
                 // 将毫秒转换为天数
                 var daysRemaining = Math.floor(difference / (1000 * 60 * 60 * 24));
 
+
                 // 剩下的毫秒数
                 var remainingMilliseconds = difference % (1000 * 60 * 60 * 24);
 
@@ -99,7 +100,7 @@
                 var minutesRemaining = Math.floor(remainingMillisecondsForMinutes / (1000 * 60));
 
                 // 在页面上显示结果
-                daysElement.innerText = ('0' + daysRemaining).slice(-2);
+                daysElement.innerText = daysRemaining;
                 hoursElement.innerText = ('0' + hoursRemaining).slice(-2);
                 minutesElement.innerText = ('0' + minutesRemaining).slice(-2);
 
