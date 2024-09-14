@@ -2,10 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Countdown to 6 PM</title>
+    <title>2024中秋放假倒计时</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #282c34;
+            color: #abb2bf;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .countdown-container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .countdown-container h1 {
+            color: #61dafb;
+            margin-bottom: 20px;
+        }
+        .countdown-container p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #61dafb;
+        }
+        .countdown-container span {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 0 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>距离2024年中秋节放假还剩：<span id="minutes"></span>分钟   /<span id="secondsRemaining"></span>秒</h1>
+    <div class="countdown-container">
+        <h1>距离2024年中秋节放假还剩：</h1>
+        <p><span id="minutes">00</span>分钟 <span>/</span> <span id="secondsRemaining">00</span>秒</p>
+    </div>
 
     <script>
         function updateCountdown() {
