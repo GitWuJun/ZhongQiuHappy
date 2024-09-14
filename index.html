@@ -58,18 +58,18 @@
     
     <div class="countdown-container">
         <h1>距离2024年国庆节放假还剩：</h1>
-        <p><span id="nationalDayDays">00</span>天 <span>/</span> <span id="nationalDayHours">00</span>小时 <span>/</span> <span id="nationalDayMinutes">00</span>分钟</p>
+        <p><span id="nationalDayDays">00</span>天 <span>/</span> <span id="nationalDayHours">00</span>小时 <span>/</span> <span id="nationalDayMinutes">00</span>分钟 (<span id="nationalDaySeconds">00</span>秒)</p>
         <div class="message" id="nationalDayMessage">国庆快乐！</div>
     </div>
     
     <div class="countdown-container">
         <h1>距离2025年春节放假还剩：</h1>
-        <p><span id="springFestivalDays">00</span>天 <span>/</span> <span id="springFestivalHours">00</span>小时 <span>/</span> <span id="springFestivalMinutes">00</span>分钟</p>
+        <p><span id="springFestivalDays">00</span>天 <span>/</span> <span id="springFestivalHours">00</span>小时 <span>/</span> <span id="springFestivalMinutes">00</span>分钟 (<span id="springFestivalSeconds">00</span>秒)</p>
         <div class="message" id="springFestivalMessage">春节快乐！</div>
     </div>
 
     <script>
-        function countdown(targetDate, messageElement, daysElement, hoursElement, minutesElement) {
+        function countdown(targetDate, messageElement, daysElement, hoursElement, minutesElement,sendsElement) {
             // 获取当前时间
             var now = new Date();
             // 计算目标时间
@@ -104,6 +104,10 @@
                 hoursElement.innerText = ('0' + hoursRemaining).slice(-2);
                 minutesElement.innerText = ('0' + minutesRemaining).slice(-2);
 
+                sendsElement.innerText = Math.floor(difference / 1000)
+
+                console.log(Math.floor(difference / 1000))
+
                 return true;
             }
         }
@@ -112,23 +116,23 @@
         var intervalId = setInterval(function() {
             // 中秋节倒计时
             if (!countdown('2024-09-14T18:00:00', document.getElementById('midAutumnMessage'), document.getElementById('midAutumnMinutes'), document.getElementById('midAutumnSecondsRemaining'))) {
-                clearInterval(intervalId);
+                // clearInterval(intervalId);
             }
             // 国庆节倒计时
-            if (!countdown('2024-09-30T18:00:00', document.getElementById('nationalDayMessage'), document.getElementById('nationalDayDays'), document.getElementById('nationalDayHours'), document.getElementById('nationalDayMinutes'))) {
-                clearInterval(intervalId);
+            if (!countdown('2024-09-30T18:00:00', document.getElementById('nationalDayMessage'), document.getElementById('nationalDayDays'), document.getElementById('nationalDayHours'), document.getElementById('nationalDayMinutes'),document.getElementById('nationalDaySeconds'))) {
+                // clearInterval(intervalId);
             }
             // 春节倒计时
-            if (!countdown('2025-01-27T18:00:00', document.getElementById('springFestivalMessage'), document.getElementById('springFestivalDays'), document.getElementById('springFestivalHours'), document.getElementById('springFestivalMinutes'))) {
-                clearInterval(intervalId);
+            if (!countdown('2025-01-27T18:00:00', document.getElementById('springFestivalMessage'), document.getElementById('springFestivalDays'), document.getElementById('springFestivalHours'), document.getElementById('springFestivalMinutes'),document.getElementById('springFestivalSeconds'))) {
+                // clearInterval(intervalId);
             }
         }, 1000);
 
         // 页面加载完成后立即执行一次
         window.onload = function() {
             countdown('2024-09-14T18:00:00', document.getElementById('midAutumnMessage'), document.getElementById('midAutumnMinutes'), document.getElementById('midAutumnSecondsRemaining'));
-            countdown('2024-09-30T18:00:00', document.getElementById('nationalDayMessage'), document.getElementById('nationalDayDays'), document.getElementById('nationalDayHours'), document.getElementById('nationalDayMinutes'));
-            countdown('2025-01-27T18:00:00', document.getElementById('springFestivalMessage'), document.getElementById('springFestivalDays'), document.getElementById('springFestivalHours'), document.getElementById('springFestivalMinutes'));
+            countdown('2024-09-30T18:00:00', document.getElementById('nationalDayMessage'), document.getElementById('nationalDayDays'), document.getElementById('nationalDayHours'), document.getElementById('nationalDayMinutes'),document.getElementById('nationalDaySeconds'));
+            countdown('2025-01-27T18:00:00', document.getElementById('springFestivalMessage'), document.getElementById('springFestivalDays'), document.getElementById('springFestivalHours'), document.getElementById('springFestivalMinutes'),document.getElementById('springFestivalSeconds'));
         };
     </script>
 </body>
