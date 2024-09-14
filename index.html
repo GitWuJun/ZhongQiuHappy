@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>2024中秋放假倒计时</title>
+    <title>2024中秋、国庆、春节放假倒计时</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -10,6 +10,7 @@
             color: #abb2bf;
             display: flex;
             justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
@@ -20,14 +21,16 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+            width: 30%;
+            min-width: 250px;
         }
         .countdown-container h1 {
-            font-size: 3.2rem;
             color: #61dafb;
             margin-bottom: 20px;
         }
         .countdown-container p {
-            font-size: 2.4rem;
+            font-size: 24px;
             font-weight: bold;
             color: #61dafb;
         }
@@ -37,45 +40,94 @@
             background-color: rgba(255, 255, 255, 0.1);
             margin: 0 5px;
         }
+        .message {
+            display: none;
+            color: #61dafb;
+            font-size: 32px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="countdown-container">
         <h1>距离2024年中秋节放假还剩：</h1>
-        <p><span id="minutes">00</span>分钟 <span>/</span> <span id="secondsRemaining">00</span>秒</p>
+        <p><span id="midAutumnMinutes">00</span>分钟 <span>/</span> <span id="midAutumnSecondsRemaining">00</span>秒</p>
+        <div class="message" id="midAutumnMessage">中秋快乐！</div>
+    </div>
+    
+    <div class="countdown-container">
+        <h1>距离2024年国庆节放假还剩：</h1>
+        <p><span id="nationalDayDays">00</span>天 <span>/</span> <span id="nationalDayHours">00</span>小时 <span>/</span> <span id="nationalDayMinutes">00</span>分钟</p>
+        <div class="message" id="nationalDayMessage">国庆快乐！</div>
+    </div>
+    
+    <div class="countdown-container">
+        <h1>距离2025年春节放假还剩：</h1>
+        <p><span id="springFestivalDays">00</span>天 <span>/</span> <span id="springFestivalHours">00</span>小时 <span>/</span> <span id="springFestivalMinutes">00</span>分钟</p>
+        <div class="message" id="springFestivalMessage">春节快乐！</div>
     </div>
 
     <script>
-        function updateCountdown() {
+        function countdown(targetDate, messageElement, daysElement, hoursElement, minutesElement) {
             // 获取当前时间
             var now = new Date();
-            // 计算今天下午6点的时间
-            var targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 0, 0, 0);
+            // 计算目标时间
+            var targetTime = new Date(targetDate);
             
-            if (now > targetTime) {
-                // 如果现在已经超过下午6点，则设定为目标时间为明天的下午6点
-                targetTime.setDate(targetTime.getDate() + 1);
+            if (now >= targetTime) {
+                // 如果已经到达或超过了目标时间
+                messageElement.style.display = 'block';
+                return false;
+            } else {
+                // 计算距离目标时间还剩多少毫秒
+                var difference = targetTime.getTime() - now.getTime();
+
+                // 将毫秒转换为天数
+                var daysRemaining = Math.floor(difference / (1000 * 60 * 60 * 24));
+
+                // 剩下的毫秒数
+                var remainingMilliseconds = difference % (1000 * 60 * 60 * 24);
+
+                // 转换为小时
+                var hoursRemaining = Math.floor(remainingMilliseconds / (1000 * 60 * 60));
+
+                // 剩下的毫秒数
+                var remainingMillisecondsForMinutes = remainingMilliseconds % (1000 * 60 * 60);
+
+                // 转换为分钟
+                var minutesRemaining = Math.floor(remainingMillisecondsForMinutes / (1000 * 60));
+
+                // 在页面上显示结果
+                daysElement.innerText = ('0' + daysRemaining).slice(-2);
+                hoursElement.innerText = ('0' + hoursRemaining).slice(-2);
+                minutesElement.innerText = ('0' + minutesRemaining).slice(-2);
+
+                return true;
             }
-
-            // 计算距离目标时间还剩多少毫秒
-            var difference = targetTime.getTime() - now.getTime();
-
-            // 将毫秒转换为秒
-            var secondsRemaining = Math.floor(difference / 1000);
-
-            // 转为分钟
-            var minutes = Math.floor(secondsRemaining / 60);
-
-            // 在页面上显示结果
-            document.getElementById('secondsRemaining').innerText = secondsRemaining;
-            document.getElementById('minutes').innerText = minutes;
         }
 
-        // 每隔1秒更新一次倒计时
-        setInterval(updateCountdown, 1000);
+        // 设置定时器
+        var intervalId = setInterval(function() {
+            // 中秋节倒计时
+            if (!countdown('2024-09-14T18:00:00', document.getElementById('midAutumnMessage'), document.getElementById('midAutumnMinutes'), document.getElementById('midAutumnSecondsRemaining'))) {
+                clearInterval(intervalId);
+            }
+            // 国庆节倒计时
+            if (!countdown('2024-09-30T18:00:00', document.getElementById('nationalDayMessage'), document.getElementById('nationalDayDays'), document.getElementById('nationalDayHours'), document.getElementById('nationalDayMinutes'))) {
+                clearInterval(intervalId);
+            }
+            // 春节倒计时
+            if (!countdown('2025-01-27T18:00:00', document.getElementById('springFestivalMessage'), document.getElementById('springFestivalDays'), document.getElementById('springFestivalHours'), document.getElementById('springFestivalMinutes'))) {
+                clearInterval(intervalId);
+            }
+        }, 1000);
 
         // 页面加载完成后立即执行一次
-        window.onload = updateCountdown;
+        window.onload = function() {
+            countdown('2024-09-14T18:00:00', document.getElementById('midAutumnMessage'), document.getElementById('midAutumnMinutes'), document.getElementById('midAutumnSecondsRemaining'));
+            countdown('2024-09-30T18:00:00', document.getElementById('nationalDayMessage'), document.getElementById('nationalDayDays'), document.getElementById('nationalDayHours'), document.getElementById('nationalDayMinutes'));
+            countdown('2025-01-27T18:00:00', document.getElementById('springFestivalMessage'), document.getElementById('springFestivalDays'), document.getElementById('springFestivalHours'), document.getElementById('springFestivalMinutes'));
+        };
     </script>
 </body>
 </html>
