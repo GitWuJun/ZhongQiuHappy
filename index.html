@@ -1,1 +1,43 @@
-Hello world!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Countdown to 6 PM</title>
+</head>
+<body>
+    <h1>距离中秋节放假还剩：<span id="minutes"></span>分钟   /<span id="secondsRemaining"></span>秒</h1>
+
+    <script>
+        function updateCountdown() {
+            // 获取当前时间
+            var now = new Date();
+            // 计算今天下午6点的时间
+            var targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 0, 0, 0);
+            
+            if (now > targetTime) {
+                // 如果现在已经超过下午6点，则设定为目标时间为明天的下午6点
+                targetTime.setDate(targetTime.getDate() + 1);
+            }
+
+            // 计算距离目标时间还剩多少毫秒
+            var difference = targetTime.getTime() - now.getTime();
+
+            // 将毫秒转换为秒
+            var secondsRemaining = Math.floor(difference / 1000);
+
+            // 转为分钟
+            var minutes = Math.floor(secondsRemaining / 60);
+
+            // 在页面上显示结果
+            document.getElementById('secondsRemaining').innerText = secondsRemaining;
+            document.getElementById('minutes').innerText = minutes;
+        }
+
+        // 每隔1秒更新一次倒计时
+        setInterval(updateCountdown, 1000);
+
+        // 页面加载完成后立即执行一次
+        window.onload = updateCountdown;
+    </script>
+</body>
+</html>
